@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:bitcoin_tracker/coin_data.dart';
+import 'package:bitcoin_tracker/currencycard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
@@ -14,15 +15,25 @@ class _PriceScreenState extends State<PriceScreen> {
   var selectedItem = "USD";
 
   String rate = "";
+  String rateE = "";
+  String rateL = "";
 
   void getRate(String curren) async {
     CoinData coindata1 = CoinData();
 
-    var rate1 = await coindata1.getcoinData(curren);
+    var rate1 = await coindata1.getcoinDataBTC(curren);
     var rateint = rate1.toInt();
+
+    var rate2 = await coindata1.getcoinDataETH(curren);
+    var rate2int = rate2.toInt();
+
+    var rate3 = await coindata1.getcoinDataLTC(curren);
+    var rate3int = rate3.toInt();
 
     setState(() {
       rate = rateint.toString();
+      rateE = rate2int.toString();
+      rateL = rate3int.toString();
     });
   }
 
@@ -78,37 +89,29 @@ class _PriceScreenState extends State<PriceScreen> {
         title: Center(child: Text('🤑 Coin Ticker')),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Colors.lightBlueAccent,
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  '1 BTC = $rate  $selectedItem',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+          getnewCard('BTC', rate, selectedItem),
+          SizedBox(
+            height: 20,
+          ),
+          getnewCard('ETH', rateE, selectedItem),
+          SizedBox(
+            height: 20,
+          ),
+          getnewCard('LTC', rateL, selectedItem),
+          Expanded(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Container(
+                  height: 150.0,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(bottom: 30.0),
+                  color: Colors.lightBlue,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  child: Platform.isIOS ? cupertinoslider() : dropdown()),
             ),
           ),
-          Container(
-              height: 150.0,
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(bottom: 30.0),
-              color: Colors.lightBlue,
-              // ignore: prefer_const_literals_to_create_immutables
-              child: Platform.isIOS ? cupertinoslider() : dropdown()),
         ],
       ),
     );
