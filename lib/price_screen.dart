@@ -13,6 +13,19 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   var selectedItem = "USD";
 
+  String rate = "";
+
+  void getRate(String curren) async {
+    CoinData coindata1 = CoinData();
+
+    var rate1 = await coindata1.getcoinData(curren);
+    var rateint = rate1.toInt();
+
+    setState(() {
+      rate = rateint.toString();
+    });
+  }
+
   DropdownButton<String> dropdown() {
     List<DropdownMenuItem<String>> dropdownlist = [];
 
@@ -29,6 +42,7 @@ class _PriceScreenState extends State<PriceScreen> {
         // ignore: prefer_const_literals_to_create_immutables
         items: dropdownlist,
         onChanged: (value) {
+          getRate(value.toString());
           setState(() {
             selectedItem = value!;
           });
@@ -46,6 +60,11 @@ class _PriceScreenState extends State<PriceScreen> {
     return CupertinoPicker(
         itemExtent: 32.0,
         onSelectedItemChanged: (selectedindex) {
+          setState(() {
+            selectedItem = currenciesList[selectedindex];
+          });
+
+          getRate(selectedItem);
           print(selectedindex);
         },
         children: dropdownlist);
@@ -73,7 +92,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+                  '1 BTC = $rate  $selectedItem',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
