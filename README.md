@@ -10,6 +10,5 @@ It helps us to get real time values of Bitcoin, Etherium and Litecoin in 20 diff
 
 Below are the screenshots of the same:-
 
-https://user-images.githubusercontent.com/57664891/155861554-fc9de348-7b53-43be-8548-36a97a66709c.jpeg
-
-https://user-images.githubusercontent.com/57664891/155861555-063158f4-7a22-4c41-9be6-ad302b5f277e.jpeg
+![WhatsApp Image 2022-02-27 at 4 18 53 AM (1)](https://user-images.githubusercontent.com/57664891/155861554-fc9de348-7b53-43be-8548-36a97a66709c.jpeg)
+![WhatsApp Image 2022-02-27 at 4 18 53 AM](https://user-images.githubusercontent.com/57664891/155861555-063158f4-7a22-4c41-9be6-ad302b5f277e.jpeg)
